@@ -41,7 +41,7 @@ public class ActivityController extends BaseUserController {
                 activity.setDesc(activityModel.getDesc());
                 activity.setImgUrl(resourceUrl+"/"+activityModel.getImgUrl());
                 activity.setTitle(activityModel.getTitle());
-                activity.setProtocol(activityModel.getProtocol());
+                activity.setDeeplink(activityModel.getProtocol());
                 activityList.add(activity);
             });
         }
@@ -68,7 +68,7 @@ public class ActivityController extends BaseUserController {
                 activity.setDesc(activityModel.getDesc());
                 activity.setImgUrl(resourceUrl+"/"+activityModel.getImgUrl());
                 activity.setTitle(activityModel.getTitle());
-                activity.setProtocol(activityModel.getProtocol());
+                activity.setDeeplink(activityModel.getProtocol());
                 activityList.add(activity);
             });
         }

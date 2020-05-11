@@ -27,7 +27,6 @@ public class ActivityModel {
     private String language;
 
 
-
     public String getId() {
         return id;
     }
@@ -107,4 +106,5 @@ public class ActivityModel {
     public void setLanguage(String language) {
         this.language = language;
     }
+
 }

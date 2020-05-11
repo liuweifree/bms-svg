@@ -13,5 +13,5 @@ public class Activity {
 
     private String desc;
 
-    private String protocol;
+    private String deeplink;
 }
