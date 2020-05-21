@@ -82,6 +82,10 @@ public class RecommendListService {
                 old.setType(recommendListModel.getType());
             }
 
+            if( null != recommendListModel.getVersion()){
+                old.setVersion(recommendListModel.getVersion());
+            }
+
             if(!CollectionUtils.isEmpty(recommendListModel.getResourceIdList())){
                 List<String> oldResourceIdList = old.getResourceIdList();
                 if(!CollectionUtils.isEmpty(oldResourceIdList)) {
@@ -116,6 +120,10 @@ public class RecommendListService {
 
     public RecommendListModel findByEffectiveTime(Long effectiveTime){
         return recommendListRepository.findByEffectiveTime(effectiveTime);
+    }
+
+    public RecommendListModel findByVersion(String version){
+        return recommendListRepository.findByVersion(version);
     }
 
 

@@ -15,5 +15,7 @@ public interface RecommendListRepository extends MongoRepository<RecommendListMo
     RecommendListModel findFirstByStatusAndTypeAndEffectiveTimeBefore(Integer status, Integer type, Long effectiveTime, Sort sort);
     List<RecommendListModel> findByStatus(Integer status);
 
+    RecommendListModel findByVersion(String version);
+
 
 }

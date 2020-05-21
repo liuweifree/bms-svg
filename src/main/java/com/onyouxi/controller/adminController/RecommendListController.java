@@ -6,6 +6,7 @@ import com.onyouxi.model.pageModel.PageResultModel;
 import com.onyouxi.model.pageModel.RestResultModel;
 import com.onyouxi.service.RecommendListService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,14 @@ public class RecommendListController {
             restResultModel.setResult_msg("存在相同相同的日期,请修改");
             return restResultModel;
         }
+        if(!StringUtils.isEmpty(recommendListModel.getVersion())) {
+            rlm = recommendListService.findByVersion(recommendListModel.getVersion());
+            if( null != rlm){
+                restResultModel.setResult(401);
+                restResultModel.setResult_msg("存在相同相同的版本号,请修改");
+                return restResultModel;
+            }
+        }
         recommendListService.save(recommendListModel);
         restResultModel.setResult(200);
         restResultModel.setResult_msg("success");
@@ -61,7 +70,15 @@ public class RecommendListController {
             RecommendListModel rlm = recommendListService.findByEffectiveTime(recommendListModel.getEffectiveTime());
             if (null != rlm && !rlm.getId().equalsIgnoreCase(recommendListModel.getId())) {
                 restResultModel.setResult(400);
-                restResultModel.setResult_msg("success");
+                restResultModel.setResult_msg("存在相同相同的日期,请修改");
+                return restResultModel;
+            }
+        }
+        if(!StringUtils.isEmpty(recommendListModel.getVersion())) {
+            RecommendListModel rlm = recommendListService.findByVersion(recommendListModel.getVersion());
+            if( null != rlm && !rlm.getId().equalsIgnoreCase(recommendListModel.getId()) ){
+                restResultModel.setResult(401);
+                restResultModel.setResult_msg("存在相同相同的版本号,请修改");
                 return restResultModel;
             }
         }
