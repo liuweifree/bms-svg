@@ -17,6 +17,7 @@ public interface ResourceRepository extends MongoRepository<ResourceModel,String
 
     Page<ResourceModel> findByStatusAndRecommendAndCategoryIsInAndShowTimeBefore(Integer status,Integer recommend,String category ,Long showTime,Pageable pageable);
 
+    Page<ResourceModel> findByStatusAndRecommendAndCategoryIsInAndShowTimeBeforeAndVerifyStatus(Integer status,Integer recommend,String category ,Long showTime,Integer verifyStatus,Pageable pageable);
 
     List<ResourceModel> findByShowTimeGreaterThanAndShowTimeLessThanAndStatus(Long startShowTime,Long endTime, Integer status, Sort sort);
 
@@ -28,4 +29,6 @@ public interface ResourceRepository extends MongoRepository<ResourceModel,String
     List<ResourceModel> findByIdIn(List<String> idList);
 
     ResourceModel findByName(String name);
+
+
 }

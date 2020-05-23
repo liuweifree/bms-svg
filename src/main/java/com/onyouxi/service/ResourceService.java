@@ -125,6 +125,10 @@ public class ResourceService {
             old.setRecommend(resourceModel.getRecommend());
         }
 
+        if( null != resourceModel.getVerifyStatus()){
+            old.setVerifyStatus(resourceModel.getVerifyStatus());
+        }
+
         resourceRepository.save(old);
         return old;
     }
@@ -183,6 +187,21 @@ public class ResourceService {
         return resourceRepository.findByStatusAndRecommendAndCategoryIsInAndShowTimeBefore(Const.STATUS_NORMAL,0,category,calendar.getTimeInMillis(),pageRequest);
     }
 
+    public Page<ResourceModel> findByStatusAndCategoryIsInAndVerifyStatus(Integer type,String category,Integer verifyStatus,Integer num, Integer size){
+        Sort sort;
+        if( type == 1){
+            sort = Sort.by( Sort.Order.desc("scoreMap.newScore"),Sort.Order.desc("createTime"));
+        }else{
+            sort = Sort.by( Sort.Order.desc("scoreMap.oldScore"),Sort.Order.desc("createTime"));
+        }
+        PageRequest pageRequest = PageRequest.of(num, size,sort);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return resourceRepository.findByStatusAndRecommendAndCategoryIsInAndShowTimeBeforeAndVerifyStatus(Const.STATUS_NORMAL,0,category,calendar.getTimeInMillis(),verifyStatus,pageRequest);
+    }
 
 
     public List<ResourceModel> findAllByShowTime(Long startTime){

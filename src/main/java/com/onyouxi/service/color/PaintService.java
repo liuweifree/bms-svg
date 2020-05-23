@@ -10,6 +10,7 @@ import com.onyouxi.model.view.Paint;
 import com.onyouxi.service.RecommendListService;
 import com.onyouxi.service.ResourceService;
 import com.onyouxi.service.TagService;
+import com.onyouxi.service.VerifyService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
@@ -37,6 +38,9 @@ public class PaintService {
     @Autowired
     private TagService tagService;
 
+    @Autowired
+    private VerifyService verifyService;
+
 
 
     public List<Paint> getPaintPage(String category,Integer pageNum , Integer pageSize,Integer userType){
@@ -45,10 +49,16 @@ public class PaintService {
         if(StringUtils.isEmpty(category)){
             page=resourceService.findByStatus(userType,pageNum,pageSize);
         }else{
-            //走推荐逻辑
 
+            //走推荐逻辑
             if( !StringUtils.isEmpty(category) && category.equals("recommend_list")){
-                RecommendListModel recommendListModel = recommendListService.findRecommend(userType);
+                RecommendListModel recommendListModel;
+                //走审核逻辑
+                if( verifyService.getVerifyStatus().intValue() == 1){
+                    recommendListModel = recommendListService.findByVerifyStatus(verifyService.getVerifyStatus(),0);
+                }else {
+                    recommendListModel = recommendListService.findRecommend(userType);
+                }
                 if( null != recommendListModel ){
                     List<ResourceModel> resourceModelList = new ArrayList<>();
                     List<String> resourceIdList = recommendListModel.getResourceIdList();
@@ -89,7 +99,13 @@ public class PaintService {
                 }
             }
 
-            page=resourceService.findByStatusAndCategoryIsIn(userType,category,pageNum,pageSize);
+            //走审核逻辑
+            if( verifyService.getVerifyStatus().intValue() == 1){
+                page = resourceService.findByStatusAndCategoryIsInAndVerifyStatus(userType,category,1,pageNum,pageSize);
+
+            }else {
+                page = resourceService.findByStatusAndCategoryIsIn(userType, category, pageNum, pageSize);
+            }
         }
 
         if( null != page){

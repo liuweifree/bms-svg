@@ -29,8 +29,8 @@ public class RecommendListModel {
     private Integer newUser;
 
     private Long createTime;
-    //版本号
-    private String version;
+    //审核状态
+    private Integer verifyStatus;
 
     //列表当中的id list
     private List<String> resourceIdList;

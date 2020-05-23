@@ -33,5 +33,11 @@ public class Const {
     public static final Integer PAY_ERROR = 510;
 
 
+    //审核状态
+    //审核中
+    public static final Integer VERIFY_ON = 1;
+    //审核结束
+    public static final Integer VERIFY_OFF = 0;
+
 
 }

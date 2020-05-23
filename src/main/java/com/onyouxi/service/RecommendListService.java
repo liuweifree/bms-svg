@@ -82,8 +82,8 @@ public class RecommendListService {
                 old.setType(recommendListModel.getType());
             }
 
-            if( null != recommendListModel.getVersion()){
-                old.setVersion(recommendListModel.getVersion());
+            if( null != recommendListModel.getVerifyStatus()){
+                old.setVerifyStatus(recommendListModel.getVerifyStatus());
             }
 
             if(!CollectionUtils.isEmpty(recommendListModel.getResourceIdList())){
@@ -122,10 +122,13 @@ public class RecommendListService {
         return recommendListRepository.findByEffectiveTime(effectiveTime);
     }
 
-    public RecommendListModel findByVersion(String version){
-        return recommendListRepository.findByVersion(version);
+    public RecommendListModel findByVerifyStatus(Integer verifyStatus,Integer type){
+        return recommendListRepository.findFirstByStatusAndTypeAndVerifyStatus(Const.STATUS_NORMAL,type,verifyStatus);
     }
 
+    public RecommendListModel findByVerifyStatusAndType(Integer verifyStatus,Integer type){
+        return recommendListRepository.findByVerifyStatusAndType(verifyStatus,type);
+    }
 
 
 

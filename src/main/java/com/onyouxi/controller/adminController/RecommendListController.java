@@ -40,11 +40,11 @@ public class RecommendListController {
             restResultModel.setResult_msg("存在相同相同的日期,请修改");
             return restResultModel;
         }
-        if(!StringUtils.isEmpty(recommendListModel.getVersion())) {
-            rlm = recommendListService.findByVersion(recommendListModel.getVersion());
+        if(null != recommendListModel.getVerifyStatus() && 1 == recommendListModel.getVerifyStatus().intValue()) {
+            rlm = recommendListService.findByVerifyStatusAndType(1,recommendListModel.getType());
             if( null != rlm){
                 restResultModel.setResult(401);
-                restResultModel.setResult_msg("存在相同相同的版本号,请修改");
+                restResultModel.setResult_msg("存在审核使用的列表,请修改");
                 return restResultModel;
             }
         }
@@ -74,8 +74,8 @@ public class RecommendListController {
                 return restResultModel;
             }
         }
-        if(!StringUtils.isEmpty(recommendListModel.getVersion())) {
-            RecommendListModel rlm = recommendListService.findByVersion(recommendListModel.getVersion());
+        if(null != recommendListModel.getVerifyStatus() && 1 == recommendListModel.getVerifyStatus().intValue()) {
+            RecommendListModel rlm = recommendListService.findByVerifyStatusAndType(1,recommendListModel.getType());
             if( null != rlm && !rlm.getId().equalsIgnoreCase(recommendListModel.getId()) ){
                 restResultModel.setResult(401);
                 restResultModel.setResult_msg("存在相同相同的版本号,请修改");

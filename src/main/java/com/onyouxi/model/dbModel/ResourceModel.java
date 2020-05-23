@@ -44,6 +44,9 @@ public class ResourceModel {
     //是否被推荐或者放到每日 0 无  1 有
     private Integer recommend;
 
+    //审核状态
+    private Integer verifyStatus;
+
 
     public String getId() {
         return id;
@@ -147,5 +150,13 @@ public class ResourceModel {
 
     public void setRecommend(Integer recommend) {
         this.recommend = recommend;
+    }
+
+    public Integer getVerifyStatus() {
+        return verifyStatus;
+    }
+
+    public void setVerifyStatus(Integer verifyStatus) {
+        this.verifyStatus = verifyStatus;
     }
 }
